@@ -8,6 +8,8 @@ public class TestingScript : MonoBehaviour {
     private void Awake() {
         Debug.Log("Awake");
         TestFunction();
+        Debug.LogWarning("");
+
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -34,5 +36,6 @@ public class TestingScript : MonoBehaviour {
     void TestFunction() {
         Debug.Log("Test Function");
     }
+
     
 }
