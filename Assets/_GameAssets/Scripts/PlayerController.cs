@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour // PlayerController sınıfını t
 
     // --- HAREKET AYARLARI (MOVEMENT SETTINGS) ---
     [Header("Movement Settings")]
+    [SerializeField] private KeyCode _movementKey;
     [SerializeField] private float _movementSpeed; // Oyuncunun hareket hızı.
 
     // --- ZIPLAMA AYARLARI (JUMP SETTINGS) ---
@@ -16,6 +17,11 @@ public class PlayerController : MonoBehaviour // PlayerController sınıfını t
     [SerializeField] private float _jumpForce; // Zıplama kuvveti.
     [SerializeField] private float _jumpCooldown; // Zıpladıktan sonra tekrar zıplayabilmek için gereken süre.
     [SerializeField] private bool _canJump; // Oyuncunun zıplayıp zıplayamayacağını belirleyen değişken.
+
+    // --- KAYDIRMA AYARLARI (SLIDING SETTINGS) ---
+    [Header("Sliding Settings")]
+    [SerializeField] private KeyCode _slideKey;
+    [SerializeField] private float _slideMultiplier;
 
     // --- YERDE OLUP OLMADIĞINI KONTROL ETMEK İÇİN (GROUND CHECK SETTINGS) ---
     [Header("Ground Check Settings")]
@@ -26,6 +32,7 @@ public class PlayerController : MonoBehaviour // PlayerController sınıfını t
     private Rigidbody _playerRigidbody; // Oyuncunun fizik motorunu kontrol etmek için Rigidbody bileşeni.
     private float _horizontalInput, _verticalInput; // Kullanıcının yön tuşlarından gelen girişleri saklayan değişkenler.
     private Vector3 _movementDirection; // Hareket yönünü tutan vektör.
+    private bool _isSliding;
 
     private void Awake()
     {
@@ -48,8 +55,21 @@ public class PlayerController : MonoBehaviour // PlayerController sınıfını t
         _horizontalInput = Input.GetAxisRaw("Horizontal"); // Kullanıcının "A-D" veya "Sol-Sağ" tuşlarıyla yatay girişini alıyoruz.
         _verticalInput = Input.GetAxisRaw("Vertical"); // Kullanıcının "W-S" veya "Yukarı-Aşağı" tuşlarıyla dikey girişini alıyoruz.
 
+
+
+        if (Input.GetKeyDown(_slideKey))
+        {
+            _isSliding = true;
+        }
+
+
+        else if (Input.GetKeyDown(_movementKey))
+        {
+            _isSliding = false;
+        }
+
         // Eğer atama yapılan zıplama tuşuna basılırsa ve zıplama izni varsa ve oyuncu yerdeyse:
-        if (Input.GetKey(_jumpKey) && _canJump && IsGrounded())
+        else if (Input.GetKey(_jumpKey) && _canJump && IsGrounded())
         {
             _canJump = false; // Hemen tekrar zıplanamaması için zıplama yeteneğini kapatıyoruz.
             SetPlayerJumping(); // Zıplama fonksiyonunu çağırıyoruz.
@@ -63,8 +83,17 @@ public class PlayerController : MonoBehaviour // PlayerController sınıfını t
         // Kamera yönüne bağlı olarak ileri ve sağ yönlerine göre hareket ediyoruz.
         _movementDirection = _orientationTransform.forward * _verticalInput + _orientationTransform.right * _horizontalInput;
 
-        // Rigidbody'ye kuvvet uygulayarak oyuncuyu hareket ettiriyoruz.
-        _playerRigidbody.AddForce(_movementDirection.normalized * _movementSpeed, ForceMode.Force);
+
+        if (_isSliding)
+        {
+            // Rigidbody'ye kuvvet uygulayarak oyuncuyu hareket ettiriyoruz.
+            _playerRigidbody.AddForce(_movementDirection.normalized * _movementSpeed * _slideMultiplier, ForceMode.Force);
+        }
+        else
+        {
+            _playerRigidbody.AddForce(_movementDirection.normalized * _movementSpeed, ForceMode.Force);
+
+        }
     }
 
     private void SetPlayerJumping()
