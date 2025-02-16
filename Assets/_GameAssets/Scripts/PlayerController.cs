@@ -22,11 +22,13 @@ public class PlayerController : MonoBehaviour // PlayerController sınıfını t
     [Header("Sliding Settings")]
     [SerializeField] private KeyCode _slideKey; // Kaymak için kullanılacak tuş.
     [SerializeField] private float _slideMultiplier; // Kaydırma miktarını belirleyen değişen bunu unityde kontrol edicez.
+    [SerializeField] private float _slideDrag; // Kaydırmadaki sürtünmeyi kontrol edecek olan değişken.
 
     // --- YERDE OLUP OLMADIĞINI KONTROL ETMEK İÇİN (GROUND CHECK SETTINGS) ---
     [Header("Ground Check Settings")]
     [SerializeField] private float _playerHeight; // Oyuncunun yüksekliği (yer kontrolü için kullanılır).
     [SerializeField] private LayerMask _groundLayer; // Oyuncunun hangi katmana (layer) temas ettiğini kontrol etmek için.
+    [SerializeField] private float _groundDrag; // Oyuncunun lineer düzlemdeki sürtünmesini kontrol edecek değişken.
 
     // --- ÖZEL DEĞİŞKENLER (PRIVATE VARIABLES) ---
     private Rigidbody _playerRigidbody; // Oyuncunun fizik motorunu kontrol etmek için Rigidbody bileşeni.
@@ -43,6 +45,8 @@ public class PlayerController : MonoBehaviour // PlayerController sınıfını t
     private void Update()
     {
         SetInputs(); // Oyuncunun girişlerini (klavye tuşlarını) her karede kontrol ediyoruz.
+        SetPlayerDrag(); // Oyuncunun giriş yaptığında draglerini de devreye almasını sağlıyoruz.
+        LimitPlayerSpeed(); // Oyuncunun hız sınırını aşmaması için fonksiyonu devreye alıyoruz.
     }
 
     private void FixedUpdate()
@@ -82,12 +86,13 @@ public class PlayerController : MonoBehaviour // PlayerController sınıfını t
         // Kamera yönüne bağlı olarak ileri ve sağ yönlerine göre hareket ediyoruz.
         _movementDirection = _orientationTransform.forward * _verticalInput + _orientationTransform.right * _horizontalInput;
 
-
+        // Sliding key'e basılırsa hızlı hareket için.
         if (_isSliding)
         {
             // Rigidbody'ye kuvvet uygulayarak ve slider multipler ile çarparak oyuncuyu daha hızlı hareket ettiriyoruz.
-            _playerRigidbody.AddForce(_movementDirection.normalized * _movementSpeed * _slideMultiplier, ForceMode.Force);
+            _playerRigidbody.AddForce(_movementSpeed * _slideMultiplier * _movementDirection.normalized, ForceMode.Force);
         }
+        // Normal hareket için.
         else
         {
             // Rigidbody'ye kuvvet uygulayarak oyuncuyu hareket ettiriyoruz.
@@ -95,6 +100,38 @@ public class PlayerController : MonoBehaviour // PlayerController sınıfını t
 
         }
     }
+
+    private void SetPlayerDrag()
+    {
+        // Sliding açıksa bunu slide drag e eşitleyecek.
+        if (_isSliding)
+        {
+            _playerRigidbody.linearDamping = _slideDrag;
+        }
+        // Normal harekette ground drag devreye giriyor.
+        else
+        {
+            _playerRigidbody.linearDamping = _groundDrag;
+        }
+    }
+
+    private void LimitPlayerSpeed()
+    {
+        // Oyuncunun yatay düzlemdeki (X-Z eksenindeki) hızını alıyoruz. 
+        // Y eksenindeki hızı sıfırlıyoruz çünkü sadece yatay hız üzerinde işlem yapacağız.
+        Vector3 flatVelocity = new Vector3(_playerRigidbody.linearVelocity.x, 0f, _playerRigidbody.linearVelocity.z);
+
+        // Eğer yatay hızın büyüklüğü (_movementSpeed değerinden) daha büyükse:
+        if (flatVelocity.magnitude > _movementSpeed)
+        {
+            // Hızı, _movementSpeed ile sınırlamak için vektörü normalize edip çarptık.
+            Vector3 limitedVelocity = flatVelocity.normalized * _movementSpeed;
+
+            // Yeni sınırlanmış hızı, oyuncunun mevcut Y ekseni hızını koruyarak tekrar Rigidbody'ye atıyoruz.
+            _playerRigidbody.linearVelocity = new Vector3(limitedVelocity.x, _playerRigidbody.linearVelocity.y, limitedVelocity.z);
+        }
+    }
+
 
     private void SetPlayerJumping()
     {
