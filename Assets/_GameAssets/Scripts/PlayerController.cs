@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour // PlayerController sınıfını t
 
     // --- HAREKET AYARLARI (MOVEMENT SETTINGS) ---
     [Header("Movement Settings")]
-    [SerializeField] private KeyCode _movementKey;
+    [SerializeField] private KeyCode _movementKey; // Normal movementa dönmek için atanan tuş.
     [SerializeField] private float _movementSpeed; // Oyuncunun hareket hızı.
 
     // --- ZIPLAMA AYARLARI (JUMP SETTINGS) ---
@@ -20,8 +20,8 @@ public class PlayerController : MonoBehaviour // PlayerController sınıfını t
 
     // --- KAYDIRMA AYARLARI (SLIDING SETTINGS) ---
     [Header("Sliding Settings")]
-    [SerializeField] private KeyCode _slideKey;
-    [SerializeField] private float _slideMultiplier;
+    [SerializeField] private KeyCode _slideKey; // Kaymak için kullanılacak tuş.
+    [SerializeField] private float _slideMultiplier; // Kaydırma miktarını belirleyen değişen bunu unityde kontrol edicez.
 
     // --- YERDE OLUP OLMADIĞINI KONTROL ETMEK İÇİN (GROUND CHECK SETTINGS) ---
     [Header("Ground Check Settings")]
@@ -32,7 +32,7 @@ public class PlayerController : MonoBehaviour // PlayerController sınıfını t
     private Rigidbody _playerRigidbody; // Oyuncunun fizik motorunu kontrol etmek için Rigidbody bileşeni.
     private float _horizontalInput, _verticalInput; // Kullanıcının yön tuşlarından gelen girişleri saklayan değişkenler.
     private Vector3 _movementDirection; // Hareket yönünü tutan vektör.
-    private bool _isSliding;
+    private bool _isSliding; // Kaydırma olup olmadığını kontrol eden değişken default olarak false başlar.
 
     private void Awake()
     {
@@ -55,14 +55,13 @@ public class PlayerController : MonoBehaviour // PlayerController sınıfını t
         _horizontalInput = Input.GetAxisRaw("Horizontal"); // Kullanıcının "A-D" veya "Sol-Sağ" tuşlarıyla yatay girişini alıyoruz.
         _verticalInput = Input.GetAxisRaw("Vertical"); // Kullanıcının "W-S" veya "Yukarı-Aşağı" tuşlarıyla dikey girişini alıyoruz.
 
-
-
+        // Slide key girişinde false olanı true ya çevirerek kaydırmaya başlıyor.
         if (Input.GetKeyDown(_slideKey))
         {
             _isSliding = true;
         }
 
-
+        // Movement key tuşuna basılırsa eğer normal hareketine geri dönecek.
         else if (Input.GetKeyDown(_movementKey))
         {
             _isSliding = false;
@@ -86,11 +85,12 @@ public class PlayerController : MonoBehaviour // PlayerController sınıfını t
 
         if (_isSliding)
         {
-            // Rigidbody'ye kuvvet uygulayarak oyuncuyu hareket ettiriyoruz.
+            // Rigidbody'ye kuvvet uygulayarak ve slider multipler ile çarparak oyuncuyu daha hızlı hareket ettiriyoruz.
             _playerRigidbody.AddForce(_movementDirection.normalized * _movementSpeed * _slideMultiplier, ForceMode.Force);
         }
         else
         {
+            // Rigidbody'ye kuvvet uygulayarak oyuncuyu hareket ettiriyoruz.
             _playerRigidbody.AddForce(_movementDirection.normalized * _movementSpeed, ForceMode.Force);
 
         }
