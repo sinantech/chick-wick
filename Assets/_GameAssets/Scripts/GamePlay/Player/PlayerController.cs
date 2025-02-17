@@ -16,6 +16,8 @@ public class PlayerController : MonoBehaviour // PlayerController sınıfını t
     [SerializeField] private KeyCode _jumpKey; // Zıplamak için kullanılacak tuş.
     [SerializeField] private float _jumpForce; // Zıplama kuvveti.
     [SerializeField] private float _jumpCooldown; // Zıpladıktan sonra tekrar zıplayabilmek için gereken süre.
+    [SerializeField] private float _airMultiplier; // Zıplama miktarının çarpanını taşıyacak olan değişken.
+    [SerializeField] private float _airDrag; // Hava sürtünmesinin değerini tutacak olan değişken.
     [SerializeField] private bool _canJump; // Oyuncunun zıplayıp zıplayamayacağını belirleyen değişken.
 
     // --- KAYDIRMA AYARLARI (SLIDING SETTINGS) ---
@@ -31,6 +33,7 @@ public class PlayerController : MonoBehaviour // PlayerController sınıfını t
     [SerializeField] private float _groundDrag; // Oyuncunun lineer düzlemdeki sürtünmesini kontrol edecek değişken.
 
     // --- ÖZEL DEĞİŞKENLER (PRIVATE VARIABLES) ---
+    private StateController _stateController; // State kontrol durumunu değişkene atayıp fonksiyonda kullanacağız.
     private Rigidbody _playerRigidbody; // Oyuncunun fizik motorunu kontrol etmek için Rigidbody bileşeni.
     private float _horizontalInput, _verticalInput; // Kullanıcının yön tuşlarından gelen girişleri saklayan değişkenler.
     private Vector3 _movementDirection; // Hareket yönünü tutan vektör.
@@ -38,6 +41,7 @@ public class PlayerController : MonoBehaviour // PlayerController sınıfını t
 
     private void Awake()
     {
+        _stateController = GetComponent<StateController>(); // Oyuncunun state controller bileşenini alıyoruz.
         _playerRigidbody = GetComponent<Rigidbody>(); // Oyuncunun Rigidbody bileşenini alıyoruz.
         _playerRigidbody.freezeRotation = true; // Rigidbody'nin dönmesini engelliyoruz, böylece oyuncu devrilmez.
     }
@@ -45,6 +49,7 @@ public class PlayerController : MonoBehaviour // PlayerController sınıfını t
     private void Update()
     {
         SetInputs(); // Oyuncunun girişlerini (klavye tuşlarını) her karede kontrol ediyoruz.
+        SetStates(); // Oyun karakterinin state girişlerini çağırıyoruz.
         SetPlayerDrag(); // Oyuncunun giriş yaptığında draglerini de devreye almasını sağlıyoruz.
         LimitPlayerSpeed(); // Oyuncunun hız sınırını aşmaması için fonksiyonu devreye alıyoruz.
     }
@@ -80,39 +85,88 @@ public class PlayerController : MonoBehaviour // PlayerController sınıfını t
         }
     }
 
+    private void SetStates()
+    {
+        // Hareket yönünü al
+        var movementDirection = GetMovementDirection();
+
+        // Karakterin yerde olup olmadığını kontrol et
+        var isGrounded = IsGrounded();
+
+        // Karakterin kayma durumunda olup olmadığını kontrol et
+        var isSliding = IsSliding();
+
+        // Mevcut durumu al
+        var currentState = _stateController.GetCurrentState();
+
+        // Yeni durumu belirle
+        var newState = currentState switch
+        {
+            // Eğer hareket yönü yoksa, karakter yerdeyse ve kayma durumu aktif değilse "Idle" durumuna geç
+            _ when movementDirection == Vector3.zero && isGrounded && !_isSliding => PlayerState.Idle,
+
+            // Eğer hareket yönü varsa, karakter yerdeyse ve kayma durumu aktif değilse "Move" durumuna geç
+            _ when movementDirection != Vector3.zero && isGrounded && !_isSliding => PlayerState.Move,
+
+            // Eğer hareket yönü varsa, karakter yerdeyse ve kayma durumu aktifse "Slide" durumuna geç
+            _ when movementDirection != Vector3.zero && isGrounded && isSliding => PlayerState.Slide,
+
+            // Eğer hareket yönü yoksa, karakter yerdeyse ve kayma durumu aktifse "SlideIdle" durumuna geç
+            _ when movementDirection == Vector3.zero && isGrounded && isSliding => PlayerState.SlideIdle,
+
+            // Eğer zıplama yapamıyorsa ve karakter havadaysa "Jump" durumuna geç
+            _ when !_canJump && !isGrounded => PlayerState.Jump,
+
+            // Hiçbir koşul sağlanmazsa mevcut durumu koru
+            _ => currentState
+        };
+
+        // Eğer yeni belirlenen durum, mevcut durumdan farklıysa durumu değiştir
+        if (newState != currentState)
+        {
+            // Durum değişimini gerçekleştir
+            _stateController.ChangeState(newState);
+        }
+
+
+    }
+
     private void SetPlayerMovement()
     {
         // Hareket yönünü belirliyoruz. 
         // Kamera yönüne bağlı olarak ileri ve sağ yönlerine göre hareket ediyoruz.
         _movementDirection = _orientationTransform.forward * _verticalInput + _orientationTransform.right * _horizontalInput;
 
-        // Sliding key'e basılırsa hızlı hareket için.
-        if (_isSliding)
+        float forceMultiplier = _stateController.GetCurrentState() switch
         {
-            // Rigidbody'ye kuvvet uygulayarak ve slider multipler ile çarparak oyuncuyu daha hızlı hareket ettiriyoruz.
-            _playerRigidbody.AddForce(_movementSpeed * _slideMultiplier * _movementDirection.normalized, ForceMode.Force);
-        }
-        // Normal hareket için.
-        else
-        {
-            // Rigidbody'ye kuvvet uygulayarak oyuncuyu hareket ettiriyoruz.
-            _playerRigidbody.AddForce(_movementDirection.normalized * _movementSpeed, ForceMode.Force);
+            PlayerState.Move => 1f,
+            PlayerState.Slide => _slideMultiplier,
+            PlayerState.Jump => _airMultiplier,
+            _ => 1f
+        };
 
-        }
+        // Rigidbody'ye kuvvet uygulayarak ve force multipler ile çarparak oyuncuyu daha hızlı hareket ettiriyoruz.
+        _playerRigidbody.AddForce(_movementSpeed * forceMultiplier * _movementDirection.normalized, ForceMode.Force);
     }
 
     private void SetPlayerDrag()
     {
-        // Sliding açıksa bunu slide drag e eşitleyecek.
-        if (_isSliding)
+        // Karakterin mevcut durumuna göre hava, zemin veya kayma sürtünmesini ayarlayan kod bloğu
+        _playerRigidbody.linearDamping = _stateController.GetCurrentState() switch
         {
-            _playerRigidbody.linearDamping = _slideDrag;
-        }
-        // Normal harekette ground drag devreye giriyor.
-        else
-        {
-            _playerRigidbody.linearDamping = _groundDrag;
-        }
+            // Eğer karakter hareket ediyorsa, zemin sürtünmesini uygula
+            PlayerState.Move => _groundDrag,
+
+            // Eğer karakter kayıyorsa, kayma sürtünmesini uygula
+            PlayerState.Slide => _slideDrag,
+
+            // Eğer karakter havadaysa, hava sürtünmesini uygula
+            PlayerState.Jump => _airDrag,
+
+            // Eğer hiçbir durum eşleşmiyorsa mevcut sürtünmeyi koru
+            _ => _playerRigidbody.linearDamping
+        };
+
     }
 
     private void LimitPlayerSpeed()
@@ -153,4 +207,19 @@ public class PlayerController : MonoBehaviour // PlayerController sınıfını t
         // Oyuncunun altına doğru bir ışın (ray) gönderiyoruz ve belirlenen layer'a çarptığında yerde olduğunu anlıyoruz.
         return Physics.Raycast(transform.position, Vector3.down, _playerHeight * 0.5f + 0.2f, _groundLayer);
     }
+
+    // Karakterin hareket yönünü döndüren fonksiyon
+    private Vector3 GetMovementDirection()
+    {
+        // Hareket yönünü normalize ederek döndür (büyüklüğünü 1 birime indirir)
+        return _movementDirection.normalized;
+    }
+
+    // Karakterin kayma durumunda olup olmadığını kontrol eden fonksiyon
+    private bool IsSliding()
+    {
+        // Kayma durumunu belirten değişkeni döndür
+        return _isSliding;
+    }
+
 }
