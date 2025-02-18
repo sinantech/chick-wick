@@ -3,7 +3,9 @@ using UnityEngine; // UnityEngine kütüphanesini içe aktarıyoruz. Rigidbody, 
 
 public class PlayerController : MonoBehaviour // PlayerController sınıfını tanımlıyoruz, MonoBehaviour sınıfından miras alıyor.
 {
+    // Oyuncunun zıplama olayını temsil eden event (olay)
     public event Action OnPlayerJumped;
+
 
     // --- REFERANSLAR (REFERENCES) ---
     [Header("References")] // Unity Inspector'da düzeni sağlamak için başlık ekliyoruz.
