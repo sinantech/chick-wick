@@ -1,7 +1,10 @@
+using System;
 using UnityEngine; // UnityEngine kütüphanesini içe aktarıyoruz. Rigidbody, Transform ve Input gibi sınıfları kullanmamızı sağlar.
 
 public class PlayerController : MonoBehaviour // PlayerController sınıfını tanımlıyoruz, MonoBehaviour sınıfından miras alıyor.
 {
+    public event Action OnPlayerJumped;
+
     // --- REFERANSLAR (REFERENCES) ---
     [Header("References")] // Unity Inspector'da düzeni sağlamak için başlık ekliyoruz.
     [SerializeField] private Transform _orientationTransform; // Oyuncunun hareket yönünü belirlemek için bir referans.
@@ -189,6 +192,8 @@ public class PlayerController : MonoBehaviour // PlayerController sınıfını t
 
     private void SetPlayerJumping()
     {
+        // Jump eventi invoke ile tetikleniyor null gelmesine karşı.
+        OnPlayerJumped?.Invoke();
         // Y eksenindeki hızını sıfırlıyoruz ki üst üste zıplamalar birikmesin.
         _playerRigidbody.linearVelocity = new Vector3(_playerRigidbody.linearVelocity.x, 0f, _playerRigidbody.linearVelocity.z);
 
