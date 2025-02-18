@@ -40,8 +40,9 @@ public class PlayerController : MonoBehaviour // PlayerController sınıfını t
     // --- ÖZEL DEĞİŞKENLER (PRIVATE VARIABLES) ---
     private StateController _stateController; // State kontrol durumunu değişkene atayıp fonksiyonda kullanacağız.
     private Rigidbody _playerRigidbody; // Oyuncunun fizik motorunu kontrol etmek için Rigidbody bileşeni.
-    private float _horizontalInput, _verticalInput; // Kullanıcının yön tuşlarından gelen girişleri saklayan değişkenler.
     private Vector3 _movementDirection; // Hareket yönünü tutan vektör.
+    private float _horizontalInput, _verticalInput; // Kullanıcının yön tuşlarından gelen girişleri saklayan değişkenler.
+    private float _startingMovementSpeed, _startingJumpForce; // Karakterin başlagıçtaki hızı ve zıplama kuvvti değeri değişkenleri.
     private bool _isSliding; // Kaydırma olup olmadığını kontrol eden değişken default olarak false başlar.
 
     private void Awake()
@@ -49,6 +50,8 @@ public class PlayerController : MonoBehaviour // PlayerController sınıfını t
         _stateController = GetComponent<StateController>(); // Oyuncunun state controller bileşenini alıyoruz.
         _playerRigidbody = GetComponent<Rigidbody>(); // Oyuncunun Rigidbody bileşenini alıyoruz.
         _playerRigidbody.freezeRotation = true; // Rigidbody'nin dönmesini engelliyoruz, böylece oyuncu devrilmez.
+        _startingMovementSpeed = _movementSpeed; // Başlagıçtaki hızı normal hıza eşitliyoruz.
+        _startingJumpForce = _jumpForce; // Başlangıçtaki zıplama kuvveti normal zıplama kuvvetine eşitleniyor.
     }
 
     private void Update()
@@ -208,6 +211,8 @@ public class PlayerController : MonoBehaviour // PlayerController sınıfını t
         _canJump = true; // Belirlenen süre sonunda oyuncunun tekrar zıplayabilmesini sağlıyoruz.
     }
 
+    #region Helper Functions
+
     private bool IsGrounded()
     {
         // Oyuncunun yerde olup olmadığını kontrol ediyoruz.
@@ -228,5 +233,30 @@ public class PlayerController : MonoBehaviour // PlayerController sınıfını t
         // Kayma durumunu belirten değişkeni döndür
         return _isSliding;
     }
+
+    public void SetMovementSpeed(float speed, float duration)
+    {
+        _movementSpeed += speed;
+        Invoke(nameof(ResetMovementSpeed), duration);
+    }
+
+    private void ResetMovementSpeed()
+    {
+        _movementSpeed = _startingMovementSpeed;
+    }
+
+    public void SetJumpForce(float force, float duration)
+    {
+        _jumpForce += force;
+        Invoke(nameof(ResetJumpForce), duration);
+
+    }
+
+    private void ResetJumpForce()
+    {
+        _jumpForce = _startingJumpForce;
+    }
+
+    #endregion
 
 }

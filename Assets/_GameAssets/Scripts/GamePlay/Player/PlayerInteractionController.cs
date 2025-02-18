@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 // Oyuncunun etkileşime girdiği nesneleri yöneten kontrolcü sınıfı
@@ -9,22 +10,19 @@ public class PlayerInteractionController : MonoBehaviour
         // Eğer çarpışılan nesne "Gold Wheat" etiketiyle eşleşiyorsa
         if (other.CompareTag(Consts.WheatTypes.GOLD_WHEAT))
         {
-            // Konsola "Gold Wheat Collected" mesajını yazdır
-            Debug.Log("Gold Wheat Collected");
+            other.gameObject?.GetComponent<GoldWheatCollectable>().Collect();
         }
 
         // Eğer çarpışılan nesne "Holy Wheat" etiketiyle eşleşiyorsa
         if (other.CompareTag(Consts.WheatTypes.HOLY_WHEAT))
         {
-            // Konsola "Holy Wheat Collected" mesajını yazdır
-            Debug.Log("Holy Wheat Collected");
+            other.gameObject?.GetComponent<HolyWheatCollectable>().Collect();
         }
 
         // Eğer çarpışılan nesne "Rotten Wheat" etiketiyle eşleşiyorsa
         if (other.CompareTag(Consts.WheatTypes.ROTTEN_WHEAT))
         {
-            // Konsola "Rotten Wheat Collected" mesajını yazdır
-            Debug.Log("Rotten Wheat Collected");
+            other.gameObject?.GetComponent<RottenWheatCollectable>().Collect();
         }
     }
 }
