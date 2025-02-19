@@ -5,6 +5,8 @@ public class PlayerController : MonoBehaviour // PlayerController sınıfını t
 {
     // Oyuncunun zıplama olayını temsil eden event (olay)
     public event Action OnPlayerJumped;
+    // Oyuncunun state değiştrimesini kontrol edecek olan event.
+    public event Action<PlayerState> OnPlayerStateChanged;
 
 
     // --- REFERANSLAR (REFERENCES) ---
@@ -134,6 +136,8 @@ public class PlayerController : MonoBehaviour // PlayerController sınıfını t
         {
             // Durum değişimini gerçekleştir
             _stateController.ChangeState(newState);
+            // Hangi state olduğunu tespit edebilmek için kontrol
+            OnPlayerStateChanged?.Invoke(newState);
         }
 
 
