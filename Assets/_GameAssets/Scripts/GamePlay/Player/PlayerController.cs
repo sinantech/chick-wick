@@ -234,27 +234,42 @@ public class PlayerController : MonoBehaviour // PlayerController sınıfını t
         return _isSliding;
     }
 
+    // Oyuncunun hareket hızını belirli bir süreliğine değiştiren fonksiyon
     public void SetMovementSpeed(float speed, float duration)
     {
+        // Mevcut hareket hızına belirtilen miktarı ekle
         _movementSpeed += speed;
+
+        // Belirtilen süre sonunda hareket hızını eski haline getirmek için fonksiyonu çağır
         Invoke(nameof(ResetMovementSpeed), duration);
     }
 
+    // Hareket hızını başlangıç değerine sıfırlayan fonksiyon
     private void ResetMovementSpeed()
     {
         _movementSpeed = _startingMovementSpeed;
     }
 
+    // Oyuncunun zıplama kuvvetini belirli bir süreliğine değiştiren fonksiyon
     public void SetJumpForce(float force, float duration)
     {
+        // Mevcut zıplama kuvvetine belirtilen miktarı ekle
         _jumpForce += force;
-        Invoke(nameof(ResetJumpForce), duration);
 
+        // Belirtilen süre sonunda zıplama kuvvetini eski haline getirmek için fonksiyonu çağır
+        Invoke(nameof(ResetJumpForce), duration);
     }
 
+    // Zıplama kuvvetini başlangıç değerine sıfırlayan fonksiyon
     private void ResetJumpForce()
     {
         _jumpForce = _startingJumpForce;
+    }
+
+    // Oyuncunun Rigidbody bileşenine erişim sağlayan fonksiyon
+    public Rigidbody GetPlayerRigidBody()
+    {
+        return _playerRigidbody;
     }
 
     #endregion

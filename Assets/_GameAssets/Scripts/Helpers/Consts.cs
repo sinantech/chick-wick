@@ -17,6 +17,13 @@ public class Consts
         public const string IS_SLIDING_ACTIVE = "IsSlidingActive";
     }
 
+    // Diğer animasyonlara ait sabit değerleri içeren yapı
+    public struct OtherAnimations
+    {
+        // Spatula'nın zıplama animasyonunu tetikleyen parametre
+        public const string IS_SPATULA_JUMPING = "IsSpatulaJumping";
+    }
+
     // Oyundaki buğday türlerini temsil eden sabit değerleri içeren yapı
     public struct WheatTypes
     {

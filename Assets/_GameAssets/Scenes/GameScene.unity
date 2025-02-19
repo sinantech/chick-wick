@@ -128,6 +128,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 254051369}
+  - component: {fileID: 254051370}
   - component: {fileID: 254051368}
   m_Layer: 0
   m_Name: RottenWheat
@@ -173,6 +174,20 @@ Transform:
   - {fileID: 1451647277}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &254051370
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 254051367}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ecd6e492e6284f6ca033cf8684189fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _wheatDesignSo: {fileID: 11400000, guid: 207e2a17e0dc848ab9cbd8178817c65e, type: 2}
+  _playerController: {fileID: 2033394802}
 --- !u!1 &325907118
 GameObject:
   m_ObjectHideFlags: 0
@@ -631,6 +646,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 452030542}
+  - component: {fileID: 452030544}
   - component: {fileID: 452030543}
   m_Layer: 0
   m_Name: GoldWheat
@@ -676,6 +692,20 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.78919846, y: 1.025296, z: 0.18012215}
   m_Center: {x: 0.037944287, y: -0.1728574, z: 0.000983946}
+--- !u!114 &452030544
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 452030541}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c4d7bd1089c24ce391bd160fc1fcc4b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _wheatDesignSo: {fileID: 11400000, guid: 479c39721860342e2b96814db6b4ae56, type: 2}
+  _playerController: {fileID: 2033394802}
 --- !u!1 &648118279
 GameObject:
   m_ObjectHideFlags: 0
@@ -825,6 +855,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 686655207}
+  - component: {fileID: 686655208}
   - component: {fileID: 686655206}
   m_Layer: 0
   m_Name: HolyWheat
@@ -870,6 +901,20 @@ Transform:
   - {fileID: 660882560}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &686655208
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 686655205}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5a0a5e68d1b84aa881d4c9e72b1294f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _wheatDesignSo: {fileID: 11400000, guid: 4429aa9aba61444d59aeeed2136a3e55, type: 2}
+  _playerController: {fileID: 2033394802}
 --- !u!1 &726488964
 GameObject:
   m_ObjectHideFlags: 0
