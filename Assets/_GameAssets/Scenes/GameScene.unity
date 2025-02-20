@@ -1103,6 +1103,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 678881674}
+  - component: {fileID: 678881675}
   m_Layer: 5
   m_Name: TimerUI
   m_TagString: Untagged
@@ -1131,6 +1132,22 @@ RectTransform:
   m_AnchoredPosition: {x: -1031, y: -429.49997}
   m_SizeDelta: {x: -2062, y: -859}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &678881675
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 678881673}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d867af129fa404841b539cc0f9d896e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _timerRotatableTransform: {fileID: 1461978466}
+  _timerText: {fileID: 1113280400}
+  _rotationDuration: 60
+  _rotationEase: 1
 --- !u!1 &726488964
 GameObject:
   m_ObjectHideFlags: 0
@@ -1753,6 +1770,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 969472148}
+  - component: {fileID: 969472149}
   m_Layer: 5
   m_Name: PlayerHealthUI
   m_TagString: Untagged
@@ -1782,6 +1800,25 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &969472149
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 969472147}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d136c3131d884c3081026e377fc9cff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerHealthImages:
+  - {fileID: 1020267820}
+  - {fileID: 1558325638}
+  - {fileID: 810153016}
+  _playerHealthySprite: {fileID: 21300000, guid: f52db0cc606b0d648b3868f7865417c6, type: 3}
+  _playerUnhealthySprite: {fileID: 21300000, guid: 132037a797cdc04469a6e251ee7e2172, type: 3}
+  _scaleDuration: 0.3
 --- !u!1 &1020267818
 GameObject:
   m_ObjectHideFlags: 0
@@ -2336,7 +2373,7 @@ GameObject:
   - component: {fileID: 1461978468}
   - component: {fileID: 1461978467}
   m_Layer: 5
-  m_Name: TimerRotateable
+  m_Name: TimerRotatable
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
