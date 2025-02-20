@@ -2730,12 +2730,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63a8c93586cdc4202b59c67db33f4f9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playerController: {fileID: 2033394802}
   _playerWalkingTransform: {fileID: 1672403101}
   _playerSlidingTransform: {fileID: 631867477}
+  _boosterSpeedTransform: {fileID: 498598944}
+  _boosterJumpTransform: {fileID: 1404581940}
+  _boosterSlowTransform: {fileID: 1648900074}
+  _goldBoosterWheatImage: {fileID: 1055689558}
+  _holyBoosterWheatImage: {fileID: 429731684}
+  _rottenBoosterWheatImage: {fileID: 624496642}
   _playerWalkingActiveSprite: {fileID: 21300000, guid: 63da247c002233a40b6ddb98eb9ccfc9, type: 3}
   _playerWalkingPassiveSprite: {fileID: 21300000, guid: 3dd674e6fd7c4b947ba844cefbe74a59, type: 3}
   _playerSlidingActiveSprite: {fileID: 21300000, guid: 0917b2a570f442240b4dad708ea03a8c, type: 3}
   _playerSlidingPassiveSprite: {fileID: 21300000, guid: d940b4f7ef5fecb41b88ec34b426e6e1, type: 3}
+  _moveDuration: 0.35
+  _moveEase: 27
 --- !u!1 &1648900073
 GameObject:
   m_ObjectHideFlags: 0
