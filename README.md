@@ -1,1 +1,3 @@
-# chick-wick-tutorial begins
+# chick-wick
+##Author
+Sinan Can Ozer
