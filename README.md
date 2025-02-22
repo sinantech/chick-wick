@@ -1,3 +1,4 @@
 # chick-wick
-##Author
+
+## Author
 Sinan Can Ozer
