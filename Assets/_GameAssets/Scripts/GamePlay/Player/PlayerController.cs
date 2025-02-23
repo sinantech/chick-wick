@@ -58,6 +58,11 @@ public class PlayerController : MonoBehaviour // PlayerController sınıfını t
 
     private void Update()
     {
+        if (GameManager.Instance.GetCurrentGameState() != GameState.Play && GameManager.Instance.GetCurrentGameState() != GameState.Resume)
+        {
+            return;
+        }
+
         SetInputs(); // Oyuncunun girişlerini (klavye tuşlarını) her karede kontrol ediyoruz.
         SetStates(); // Oyun karakterinin state girişlerini çağırıyoruz.
         SetPlayerDrag(); // Oyuncunun giriş yaptığında draglerini de devreye almasını sağlıyoruz.
@@ -66,6 +71,11 @@ public class PlayerController : MonoBehaviour // PlayerController sınıfını t
 
     private void FixedUpdate()
     {
+        if (GameManager.Instance.GetCurrentGameState() != GameState.Play && GameManager.Instance.GetCurrentGameState() != GameState.Resume)
+        {
+            return;
+        }
+
         SetPlayerMovement(); // Oyuncunun fizik tabanlı hareketini işleyen fonksiyon.
     }
 
