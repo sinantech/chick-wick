@@ -1,6 +1,11 @@
 // Oyunda kullanılan sabit değerleri içeren sınıf
 public class Consts
 {
+    public struct SceneNames
+    {
+        public const string GAME_SCENE = "GameScene";
+    }
+
     // Oyuncu animasyonlarına ait sabit değerleri içeren yapı
     public struct PlayerAnimations
     {
