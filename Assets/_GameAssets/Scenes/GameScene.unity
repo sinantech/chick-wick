@@ -1410,6 +1410,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 407548547}
+  - component: {fileID: 407548548}
   m_Layer: 5
   m_Name: LosePopup
   m_TagString: Untagged
@@ -1437,6 +1438,22 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 512, y: 512}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &407548548
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 407548546}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a073ffaefc8b04e299ae1ec36995d213, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _timerUI: {fileID: 678881675}
+  _tryAgainbutton: {fileID: 318650374}
+  _mainMenuButton: {fileID: 1677219139}
+  _timerText: {fileID: 715028086}
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -3250,6 +3267,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 917804825}
+  - component: {fileID: 917804826}
   m_Layer: 5
   m_Name: WinLoseUI
   m_TagString: Untagged
@@ -3279,6 +3297,22 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &917804826
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 917804824}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a6d30557b598405997ccdc1c2ce3aff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _blackBackGroundObject: {fileID: 1737147356}
+  _winPopup: {fileID: 951345168}
+  _losePopup: {fileID: 407548546}
+  _animationDuration: 0.3
 --- !u!1 &921909656
 GameObject:
   m_ObjectHideFlags: 0
@@ -3586,6 +3620,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 951345169}
+  - component: {fileID: 951345170}
   m_Layer: 5
   m_Name: WinPopup
   m_TagString: Untagged
@@ -3613,6 +3648,22 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 512, y: 512}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &951345170
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 951345168}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b35c4a4a969ed416b995b525f2a3ee89, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _timerUI: {fileID: 678881675}
+  _oneMoreButton: {fileID: 114412942}
+  _mainMenuButton: {fileID: 159465549}
+  _timerText: {fileID: 915221905}
 --- !u!1 &969472147
 GameObject:
   m_ObjectHideFlags: 0
@@ -4032,6 +4083,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _eggCounterUI: {fileID: 1200993889}
+  _winLoseUI: {fileID: 917804826}
   _maxEggconut: 5
 --- !u!4 &1053208067
 Transform:
