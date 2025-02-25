@@ -820,6 +820,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c0b24ac7cc8346b2b1adbf6ea1eba2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playerHealthUI: {fileID: 969472149}
   _maxHealth: 3
 --- !u!4 &273483203
 Transform:
@@ -2262,7 +2263,8 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2100000, guid: a0c7eaad6be4c44689d352e2204b2678, type: 2}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 629162175760893072, guid: 69ef6ec9a0720ab4181a382ad028a657, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 69ef6ec9a0720ab4181a382ad028a657, type: 3}
@@ -2341,7 +2343,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2847397858773733181, guid: efcb73ed35c5d486d916397d34d5b423, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.34
+      value: 1.44
       objectReference: {fileID: 0}
     - target: {fileID: 2847397858773733181, guid: efcb73ed35c5d486d916397d34d5b423, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2411,7 +2413,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2847397858773733181, guid: efcb73ed35c5d486d916397d34d5b423, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -5.41
+      value: -6.12
       objectReference: {fileID: 0}
     - target: {fileID: 2847397858773733181, guid: efcb73ed35c5d486d916397d34d5b423, type: 3}
       propertyPath: m_LocalPosition.z
@@ -7633,7 +7635,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2847397858773733181, guid: efcb73ed35c5d486d916397d34d5b423, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.55
+      value: 1.32
       objectReference: {fileID: 0}
     - target: {fileID: 2847397858773733181, guid: efcb73ed35c5d486d916397d34d5b423, type: 3}
       propertyPath: m_LocalPosition.z
@@ -7849,7 +7851,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2847397858773733181, guid: efcb73ed35c5d486d916397d34d5b423, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -6.09
+      value: -6.2
       objectReference: {fileID: 0}
     - target: {fileID: 2847397858773733181, guid: efcb73ed35c5d486d916397d34d5b423, type: 3}
       propertyPath: m_LocalPosition.z
@@ -8302,7 +8304,7 @@ GameObject:
   - component: {fileID: 2033394805}
   - component: {fileID: 2033394800}
   - component: {fileID: 2033394799}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8442,6 +8444,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0558d152db6954740b8605d0ae5705e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playerVisualTransform: {fileID: 8620860709200134359}
 --- !u!1 &2033806462
 GameObject:
   m_ObjectHideFlags: 0
@@ -9389,7 +9392,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2847397858773733181, guid: efcb73ed35c5d486d916397d34d5b423, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.28
+      value: 1.56
       objectReference: {fileID: 0}
     - target: {fileID: 2847397858773733181, guid: efcb73ed35c5d486d916397d34d5b423, type: 3}
       propertyPath: m_LocalPosition.z
