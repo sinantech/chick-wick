@@ -2265,6 +2265,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 629162175760893072, guid: 69ef6ec9a0720ab4181a382ad028a657, type: 3}
+    - {fileID: 4856123349541391923, guid: 69ef6ec9a0720ab4181a382ad028a657, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 69ef6ec9a0720ab4181a382ad028a657, type: 3}
@@ -4327,6 +4328,7 @@ MonoBehaviour:
   _eggCounterUI: {fileID: 1200993889}
   _winLoseUI: {fileID: 917804826}
   _maxEggconut: 5
+  _delay: 0.5
 --- !u!4 &1053208067
 Transform:
   m_ObjectHideFlags: 0
