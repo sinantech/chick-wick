@@ -7,7 +7,7 @@ public class StateController : MonoBehaviour
     private PlayerState _currentPlayerState = PlayerState.Idle;
 
     // Oyun başladığında çağrılan fonksiyon
-    void Start()
+    private void Start()
     {
         // Oyuncunun başlangıç durumunu "Idle" olarak ayarla
         ChangeState(PlayerState.Idle);
