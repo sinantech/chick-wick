@@ -28,6 +28,14 @@ public class Consts
         public const string IS_SLIDING_ACTIVE = "IsSlidingActive";
     }
 
+    public struct CatAnimations
+    {
+        public const string IS_IDLING = "IsIdling";
+        public const string IS_WALKING = "IsWalking";
+        public const string IS_RUNNING = "IsRunning";
+        public const string IS_ATTACKING = "IsAttacking";
+    }
+
     // Diğer animasyonlara ait sabit değerleri içeren yapı
     public struct OtherAnimations
     {
