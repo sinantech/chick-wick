@@ -102,6 +102,7 @@ public class PlayerController : MonoBehaviour // PlayerController sınıfını t
             _canJump = false; // Hemen tekrar zıplanamaması için zıplama yeteneğini kapatıyoruz.
             SetPlayerJumping(); // Zıplama fonksiyonunu çağırıyoruz.
             Invoke(nameof(ResetJumping), _jumpCooldown); // Belirlenen süre sonra tekrar zıplayabilmesi için fonksiyon çağırıyoruz.
+            AudioManager.Instance.Play(SoundType.JumpSound);
         }
     }
 

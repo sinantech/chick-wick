@@ -37,6 +37,8 @@ public class SpatulaBoos : MonoBehaviour, IBoostable
 
         // Belirli bir süre sonra tekrar aktif hale gelmesini sağla
         Invoke(nameof(ResetActivation), 0.2f);
+
+        AudioManager.Instance.Play(SoundType.SpatulaSound);
     }
 
     // Spatula'nın boost animasyonunu oynatan fonksiyon
