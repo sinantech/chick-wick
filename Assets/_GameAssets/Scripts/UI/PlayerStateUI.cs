@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.Playables;
 using UnityEngine.UI;
 
 // Oyuncu durumlarını kullanıcı arayüzünde gösteren sınıf
@@ -13,6 +15,7 @@ public class PlayerStateUI : MonoBehaviour
     [SerializeField] private RectTransform _boosterSpeedTransform; // Hız güçlendirme UI elementi
     [SerializeField] private RectTransform _boosterJumpTransform; // Zıplama güçlendirme UI elementi
     [SerializeField] private RectTransform _boosterSlowTransform; // Yavaşlatma güçlendirme UI elementi
+    [SerializeField] private PlayableDirector _playableDirector;
 
     [Header("Images")]
     [SerializeField] private Image _goldBoosterWheatImage; // Altın buğday güçlendirme ikonu
@@ -52,6 +55,11 @@ public class PlayerStateUI : MonoBehaviour
         // Oyuncunun durum değişikliği olayına abone ol
         _playerController.OnPlayerStateChanged += PlayerController_OnPlayerStateChanged;
 
+        _playableDirector.stopped += OnTimeLineFinished;
+    }
+
+    private void OnTimeLineFinished(PlayableDirector director)
+    {
         // Varsayılan UI durumlarını ayarla (Başlangıçta yürüyüş aktif, kayma pasif)
         SetStateUserInterfaces(_playerWalkingActiveSprite, _playerSlidingPassiveSprite, _playerWalkingTransform, _playerSlidingTransform);
     }
