@@ -30,6 +30,8 @@ public class GoldWheatCollectable : MonoBehaviour, ICollectable
             _wheatDesignSo.ActiveSprite, _wheatDesignSo.PassiveSprite, _wheatDesignSo.ActiveWheatSprite,
             _wheatDesignSo.PassiveWheatSprite, _wheatDesignSo.ResetBoostDuration);
 
+        CameraShake.Instance.ShakeCamera(0.5f, 0.5f);
+
         // Buğday nesnesini sahneden kaldır
         Destroy(this.gameObject);
     }
